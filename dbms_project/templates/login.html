@@ -142,6 +142,11 @@
     margin: auto;
     border-radius: 10px;
   }
+  .error{
+    border: solid red;
+  background-color: cyan;
+  color:black;
+  }
   </style>
 
 </head>
@@ -166,15 +171,18 @@
     {% if messages %}
       {% for category, message in messages %}
           {% if category == 'message' %}
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning " role="alert">
           {% else %}
             <div class="alert alert-{{ category }}" role="alert">
           {% endif %}
             {{ message }}
-          </div>
+            <button type="button" class="close alert-dismissible"  data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button></div>
       {% endfor %}
     {% endif %}
 {% endwith %}
+
 </div>
 <div id="id01" class="modal">
 
@@ -284,7 +292,7 @@ window.onclick = function(event) {
 }
 </script>
 <body>
-<figure id="img-div">
+<figure id="img-div" class="text-center">
     <img src="{{ url_for('static',filename='Home.jpg') }}">
 </figure>
 </body>
