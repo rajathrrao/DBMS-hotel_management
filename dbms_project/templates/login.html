@@ -196,20 +196,20 @@
     <div class="container">
       <label for="userid"><b>Customer ID</b></label>
       {{ signinform.userid(placeholder="Enter Customer ID") }}
-      <div class="error">
         {% for error in signinform.errors['userid'] %}
+        <div class="error">
           {{error}}<span class="closebtn error-cb">&times;</span>
-          {% endfor%}
         </div>
+          {% endfor%}
       <!--<input type="text" placeholder="Enter Customer ID" name="cid" required>-->
 
       <label for="password"><b>Password</b></label>
       {{ signinform.password(placeholder="Enter Password") }}
-      <div class="error">
         {% for error in signinform.errors['password'] %}
+        <div class="error">
           {{error}}<span class="closebtn error-cb">&times;</span>
-          {% endfor%}
         </div>
+          {% endfor%}
       <!--<input type="password" placeholder="Enter Password" name="psw" required>-->
       <button type="submit" id="signin" name="signin">Login</button>
       <label>
