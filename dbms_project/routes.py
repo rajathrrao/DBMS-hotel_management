@@ -14,7 +14,7 @@ DATABASE = 'hotel_room_allotment.db'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'home'
-
+#
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
 def home():
