@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block style %}
+body {font-family: Arial, Helvetica, sans-serif;}
+ .animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+.checked {
+  color: orange;
+}
+.set-width{
+width:50%;
+}
+
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center
+}
+
+.rating>input {
+    display: none
+}
+
+.rating>label {
+    position: relative;
+    width: 1em;
+    font-size: 2vw;
+    color: #FFD600;
+    cursor: pointer
+}
+
+.rating>label::before {
+    content: "\2605";
+    position: absolute;
+    opacity: 0
+}
+
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="container mt-3">
+  <div class="input-group mb-3">
+  	<div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+    </div>
+    <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Write a review..">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button">Rate</button>  
+      <button class="btn btn-danger" type="button">Cancel</button>  
+     </div>
+  </div>
+</div>
+</div>
+
+
+<div class="d-flex flex-wrap align-content-around m-5">
+
+<div class="card bg-light m-5 set-width" style="max-width: 18rem;">
+  <div class="card-header"><span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<span class="fa fa-star"></span></p></div>
+  <div class="card-body">
+    <p class="card-text">Review goes here.</p>
+  </div>
+</div>
+
+<div class="card bg-light m-5 set-width" style="max-width: 18rem;">
+  <div class="card-header"><span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<span class="fa fa-star"></span></p></div>
+  <div class="card-body">
+    <p class="card-text">Review goes here.</p>
+  </div>
+</div>
+
+<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
+  <div class="card-header"><span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<span class="fa fa-star"></span></p></div>
+  <div class="card-body">
+    <p class="card-text">Review goes here.</p>
+  </div>
+</div>
+
+<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
+  <div class="card-header"><span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<span class="fa fa-star"></span></p></div>
+  <div class="card-body">
+    <p class="card-text">Review goes here.</p>
+  </div>
+</div>
+
+<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
+  <div class="card-header"><span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<span class="fa fa-star"></span></p></div>
+  <div class="card-body">
+    <p class="card-text">Review goes here.</p>
+  </div>
+</div>
+
+<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
+  <div class="card-header"><span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star checked"></span>
+	<span class="fa fa-star"></span>
+	<span class="fa fa-star"></span></p></div>
+  <div class="card-body">
+    <p class="card-text">Review goes here.</p>
+  </div>
+</div>
+
+
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block style %}
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+{% endblock %}
+
+{% block main %}
+<div class="imgcontainer">
+      <img src="{{ url_for('static',filename='image1.jpg') }}" alt="Avatar" class="avatar">
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
