@@ -92,5 +92,5 @@ def dashboard():
 def hotel(location):
     if not check_login():
         return redirect(url_for('.home'))
-    
-    return render_template('hotel')
+
+    return render_template('hotel.html')
