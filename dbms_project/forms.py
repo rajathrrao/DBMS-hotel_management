@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import IntegerField, SubmitField, StringField, DateField
+from wtforms import IntegerField, SubmitField, StringField, DateField, SelectField, DecimalField
 from wtforms.validators import DataRequired,ValidationError,NumberRange, Regexp
 from wtforms.widgets import TextArea
 
@@ -19,3 +19,9 @@ class RegisterForm(FlaskForm):
     aadhar = StringField('aadhar', validators=[InputRequired()])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
     repassword = PasswordField('repassword', validators=[InputRequired(), Length(min=8, max=80)])
+
+class FilterForm(FlaskForm):
+    type = IntegerField('type_id', validators=[InputRequired()])
+    price = DecimalField('price', validators=[InputRequired()])
+    checkin = DateField('checkin', validators=[InputRequired()])
+    checkout = DateField('checkout', validators=[InputRequired()])
