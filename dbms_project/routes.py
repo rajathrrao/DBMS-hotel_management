@@ -102,8 +102,8 @@ def hotel(location):
     con = sqlite3.connect(DATABASE)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
-    cur.execute('''SELECT hotel_id, hotel_name, locations, photo, avgstar
-    FROM HOTELS_VIEW WHERE locations="%s";'''%(location))
+    cur.execute('''SELECT hotel_id, hotel_name, locations, photo, AVG(star) AS avgstar
+    FROM HOTEL NATURAL JOIN REVIEW WHERE locations="%s" GROUP BY hotel_id;'''%(location))
     hotels = cur.fetchall()
     con.close()
     return render_template('hotel.html', hotels = hotels)
@@ -358,7 +358,7 @@ def profile():
     if request.method == 'POST':
         if profileform.validate_on_submit():
             if check_password_hash(profile['password'], profileform.oldpassword.data):
-                print('hi')
+                print('')
             else:
                 flash("old password didnt match")
     return render_template('profile.html', profile = profile, profileform=profileform)
