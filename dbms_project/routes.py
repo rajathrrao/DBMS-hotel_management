@@ -224,7 +224,7 @@ def ConfirmBooking():
     except:
         con.rollback()
         flash("Error while creating bill","warning")
-    return redirect('.upcoming')
+    return redirect(url_for('.upcoming'))
 
 @app.route('/upcoming', methods=['GET','POST'])
 def upcoming():
@@ -262,7 +262,7 @@ def upcoming():
             card[bill['bill_id']].append({'check_in':bill['check_in'],'check_out':bill['check_out'],'room_no':bill['room_no'],
             'price':bill['price'],'hotel_name':bill['hotel_name'],'locations':bill['locations']})
 
-    return render_template('bill_details.html', card = card, Upcoming=True)
+    return render_template('bill_details.html', card = card, upcoming=True)
 
 @app.route('/cancelled')
 def cancelled():
