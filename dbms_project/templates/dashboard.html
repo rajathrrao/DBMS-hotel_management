@@ -5,7 +5,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 {% endblock %}
 
 {% block main %}
-<a href="{{url_for('.dashboard')}}" class="float-sm-right mr-4"><i class="fa fa-user"></i> {{ session['c_id'] }}</a>
+<a href="{{url_for('.profile')}}" class="float-sm-right mr-4"><i class="fa fa-user"></i> {{ session['c_id'] }}</a>
 <form action="{{url_for('.dashboard')}}" method="post">
 <div class="container mt-5 mb-5">
   <div class="row justify-content-center">
@@ -40,8 +40,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
   <div class="card mx-auto mt-5" style="width:250px;" >
     <img class="card-img-top mx-auto w-80" src="{{ url_for('static',filename='calendar.png') }}">
     <div class="card-body">
-      <p class="card-title text-center">Upcomming History</p>
-      <a href="{{url_for('.dashboard')}}" class="stretched-link"></a>
+      <p class="card-title text-center">Upcomming</p>
+      <a href="{{url_for('.upcoming')}}" class="stretched-link"></a>
     </div>
   </div>
 </div>
@@ -52,7 +52,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <img class="card-img-top mx-auto w-80" src="{{ url_for('static',filename='booking.png') }}">
     <div class="card-body">
       <p class="card-title text-center" >Booking History</p>
-      <a href="{{url_for('.dashboard')}}" class="stretched-link"></a>
+      <a href="{{url_for('.history')}}" class="stretched-link"></a>
     </div>
   </div>
 </div>
@@ -63,7 +63,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <img class="card-img-top mx-auto w-80" src="{{ url_for('static',filename='cancel.png') }}">
     <div class="card-body">
       <p class="card-title text-center" >Cancelled Booking</p>
-      <a href="{{url_for('.dashboard')}}" class="stretched-link"></a>
+      <a href="{{url_for('.cancelled')}}" class="stretched-link"></a>
     </div>
   </div>
 </div>

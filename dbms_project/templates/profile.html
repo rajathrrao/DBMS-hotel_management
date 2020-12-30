@@ -102,12 +102,12 @@ span.psw {
 }
 
 @-webkit-keyframes animatezoom {
-  from {-webkit-transform: scale(0)} 
+  from {-webkit-transform: scale(0)}
   to {-webkit-transform: scale(1)}
 }
-  
+
 @keyframes animatezoom {
-  from {transform: scale(0)} 
+  from {transform: scale(0)}
   to {transform: scale(1)}
 }
 
@@ -143,11 +143,11 @@ span.psw {
   <div class="card mx-auto" style="width:400px">
     <img class="card-img-top w-100" src="{{ url_for('static',filename='image.jpg') }}">
     <div class="card-body">
-      <h4 class="card-title" id="name">Kartik Nayak</h4>
-      <p id="cid" class="card-text"><i class="fa fa-address-book mr-1" aria-hidden="true"></i>kartik</p>
-      <p id="phone" class="card-text"><i class="fa fa-phone mr-1" aria-hidden="true"></i>7022773055</p>
-      <p id="email" class="card-text"><i class="fa fa-envelope mr-1" aria-hidden="true"></i>kartiknnayak2000@gmail.com</p>
-      <p id="aadhar" class="card-text"><i class="fa fa-id-card mr-1" aria-hidden="true"></i></i>301546523101</p>
+      <h4 class="card-title" id="name">{{session['name']}}</h4>
+      <p id="cid" class="card-text"><i class="fa fa-address-book mr-1" aria-hidden="true"></i>{{session['c_id']}}</p>
+      <p id="phone" class="card-text"><i class="fa fa-phone mr-1" aria-hidden="true"></i>{{profile['phone']}}</p>
+      <p id="email" class="card-text"><i class="fa fa-envelope mr-1" aria-hidden="true"></i>{{session['email']}}</p>
+      <p id="aadhar" class="card-text"><i class="fa fa-id-card mr-1" aria-hidden="true"></i>{{profile['aadhar_no']}}</p>
       <a href="#" class="btn btn-primary" onclick="document.getElementById('id02').style.display='block'">Update</a>
     </div>
   </div>
@@ -155,7 +155,7 @@ span.psw {
 
 
 <div id="id02" class="modal">
-  
+
   <form class="modal-content animate" action="" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -168,20 +168,20 @@ span.psw {
 
 	  <label for="phone"><b>Phone Number</b></label>
       <input type="tel" placeholder="Enter Phone Number" name="phone">
-      
+
       <label for="email"><b>Email</b></label>
       <input type="email" placeholder="Enter Email" name="email">
-      
+
       <label for="opsw"><b> Old Password</b></label>
       <input type="password" placeholder="Enter Password" name="opsw" required>
-      
+
       <label for="psw"><b> New Password</b></label>
       <input type="password" placeholder="Enter Password" name="psw" >
-        
+
       <label for="cpsw"><b>Confirm Password</b></label>
       <input type="password" placeholder="Enter Password Again" name="cpsw">
       <button type="submit">Update</button>
-      
+
 
     </div>
     <div class="container" style="background-color:#f1f1f1">
@@ -192,6 +192,7 @@ span.psw {
 {% endblock %}
 
 {% block script %}
+<script>
 // Get the modal
 var modal2 = document.getElementById('id02');
 // When the user clicks anywhere outside of the modal, close it
@@ -200,6 +201,5 @@ window.onclick = function(event) {
         modal2.style.display = "none";
     }
 }
-
+</script>
 {% endblock %}
-

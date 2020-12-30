@@ -62,93 +62,47 @@ width:50%;
 
 {% block main %}
 
+<form action="{{url_for('.review', hotel_id =hotel_id)}}" method="post">
+  {{reviewform.hidden_tag()}}
 <div class="container mt-3">
   <div class="input-group mb-3">
-  	<div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+  	<div class="rating">
+      <input type="radio" name="star" value="5" id="5"><label for="5">☆</label>
+      <input type="radio" name="star" value="4" id="4"><label for="4">☆</label>
+      <input type="radio" name="star" value="3" id="3"><label for="3">☆</label>
+      <input type="radio" name="star" value="2" id="2"><label for="2">☆</label>
+      <input type="radio" name="star" value="1" id="1"><label for="1">☆</label>
     </div>
     <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Write a review..">
+      {{reviewform.details(class="form-control",placeholder="Write a review..")}}
     <div class="input-group-append">
-      <button class="btn btn-primary" type="button">Rate</button>  
-      <button class="btn btn-danger" type="button">Cancel</button>  
+      <button class="btn btn-primary" type="submit" name="rate">Rate</button>
      </div>
   </div>
 </div>
 </div>
-
+</form>
 
 <div class="d-flex flex-wrap align-content-around m-5">
 
+{% for review in reviews %}
 <div class="card bg-light m-5 set-width" style="max-width: 18rem;">
-  <div class="card-header"><span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star"></span>
-	<span class="fa fa-star"></span></p></div>
+  <div class="card-header">
+    {% for _ in range(review['star']) %}
+    <span class="fa fa-star checked"></span>
+	  {% endfor %}
+    {% for _ in range(5 - review['star']) %}
+	  <span class="fa fa-star"></span>
+	  {% endfor %}
+  </div>
   <div class="card-body">
-    <p class="card-text">Review goes here.</p>
+    <p class="card-text">{{review['details']}}</p>
   </div>
 </div>
-
-<div class="card bg-light m-5 set-width" style="max-width: 18rem;">
-  <div class="card-header"><span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star"></span>
-	<span class="fa fa-star"></span></p></div>
-  <div class="card-body">
-    <p class="card-text">Review goes here.</p>
-  </div>
-</div>
-
-<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
-  <div class="card-header"><span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star"></span>
-	<span class="fa fa-star"></span></p></div>
-  <div class="card-body">
-    <p class="card-text">Review goes here.</p>
-  </div>
-</div>
-
-<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
-  <div class="card-header"><span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star"></span>
-	<span class="fa fa-star"></span></p></div>
-  <div class="card-body">
-    <p class="card-text">Review goes here.</p>
-  </div>
-</div>
-
-<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
-  <div class="card-header"><span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star"></span>
-	<span class="fa fa-star"></span></p></div>
-  <div class="card-body">
-    <p class="card-text">Review goes here.</p>
-  </div>
-</div>
-
-<div class="card bg-light m-5  set-width" style="max-width: 18rem;">
-  <div class="card-header"><span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star checked"></span>
-	<span class="fa fa-star"></span>
-	<span class="fa fa-star"></span></p></div>
-  <div class="card-body">
-    <p class="card-text">Review goes here.</p>
-  </div>
-</div>
-
+{% endfor %}
 
 </div>
 {% endblock %}
 
 {% block script %}
 {% endblock %}
-

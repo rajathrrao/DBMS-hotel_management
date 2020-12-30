@@ -34,7 +34,7 @@ div.scroll {
     <div class="col-md-2">
       <div class="container">
           <select id="type" name="type" required="" class="custom-select">
-            <option value="{{filter.type}}" selected>{{filter.type}}</option>
+            <option value="{{filter.type}}" selected>Choose a type</option>
             {% for type in types %}
             <option value="{{type.type_id}}" class="dropdown-item">{{type.no_beds}} beds, {{'Wifi' if type.wifi}} {{'TV' if type.tv}} {{'AC' if type.ac}}</option>
             {% endfor %}
@@ -118,12 +118,12 @@ div.scroll {
 <div class="scroll">
 <div class="d-flex flex-column align-content-around m-1">
 
-{% for item in session['cart'] %}
+{% for item in cart %}
 <div class="card bg-light m-1 " style="max-width: 300px;">
   <div class="card-body">
     <p class="card-text">HOTEL NAME: {{item['hotel_name']}}</p>
 	<p class="card-text">ROOM NUMBER: {{item['room_no']}}</p>
-	<p class="card-text">TYPE DETAILS: {{item['beds']}}</p>
+	<p class="card-text">PRICE: {{item['price']}}</p>
   <form action="{{url_for('.room',hotel_id=hotel_id)}}" method="post">
     <input type="hidden" name="room_id" value="{{item['room_id']}}">
 	<button type="submit" class="btn btn-danger" name="delete">DELETE</button>
@@ -132,7 +132,16 @@ div.scroll {
 </div>
 {% endfor %}
 
-<button type="button" class="btn btn-dark">CONFIRM BOOKING</button>
+<form action="{{url_for('.ConfirmBooking')}}" method="post">
+  <select name="mode" id="mode" required="" class="custom-select">
+    <option disabled>Select mode of payment</option>
+    <option value="UPI">UPI</option>
+    <option value="DEBIT">DEBIT</option>
+    <option value="CREDIT">CREDIT</option>
+    <option value="NET BANKING">NET BANKING</option>
+  </select>
+<button type="submit" class="btn btn-dark">CONFIRM BOOKING</button>
+</form>
 </div>
 </div>
 
