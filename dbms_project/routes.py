@@ -14,7 +14,7 @@ mail= Mail(app)
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'sjcevfm@gmail.com'
-app.config['MAIL_PASSWORD'] = 'sjcelccvfm'
+app.config['MAIL_PASSWORD'] = '*************'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
@@ -71,7 +71,7 @@ def home():
         elif 'register' in request.form:
             if registerform.validate_on_submit():
                 if registerform.password.data==registerform.repassword.data:
-                    if True:
+                    try:
                         hashed_password = generate_password_hash(registerform.password.data, method='sha256')
                         with sqlite3.connect(DATABASE) as con:
                             cur = con.cursor()
@@ -87,9 +87,9 @@ def home():
                         mail.send(msg)
                         flash("User created successfully","success")
                         return redirect(url_for('.home'))
-                    #except:
-                    #    con.rollback()
-                    #    flash("SignUp unsuccessful","warning")
+                    except:
+                        con.rollback()
+                        flash("SignUp unsuccessful","warning")
                 else:
                     flash("Re-entered password not matched the password","warning")
 
@@ -120,7 +120,7 @@ def hotel(location):
     FROM HOTEL NATURAL JOIN REVIEW WHERE locations="%s" GROUP BY hotel_id;'''%(location))
     hotels = cur.fetchall()
     con.close()
-    return render_template('hotel.html', hotels = hotels)
+    return render_template('hotel.html', hotels = hotels, back=url_for('.dashboard'))
 
 @app.route('/rooms/<hotel_id>', methods=['GET', 'POST'])
 def room(hotel_id):
@@ -209,9 +209,11 @@ def room(hotel_id):
     types = cur.fetchall()
     cur.execute('SELECT hotel_name, room_id, room_no, price FROM TEMP_CART WHERE c_id="%s";'%(session['c_id']))
     cart = cur.fetchall()
+    cur.execute('SELECT locations FROM HOTEL WHERE hotel_id="%s";'%(hotel_id))
+    location = cur.fetchone()[0]
     con.close()
     return render_template('room.html', hotel_id=hotel_id, filterform = filterform, rooms=session['rooms'], types=types,
-    filter=session['filter'], cart=cart)
+    filter=session['filter'], cart=cart, back=url_for('.hotel', location=location))
 
 @app.route('/confirmbooking', methods=['POST'])
 def ConfirmBooking():
@@ -288,7 +290,7 @@ def upcoming():
             card[bill['bill_id']].append({'check_in':bill['check_in'],'check_out':bill['check_out'],'room_no':bill['room_no'],
             'price':bill['price'],'hotel_name':bill['hotel_name'],'locations':bill['locations']})
 
-    return render_template('bill_details.html', card = card, upcoming=True)
+    return render_template('bill_details.html', card = card, upcoming=True, back=url_for('.dashboard'))
 
 @app.route('/cancelled')
 def cancelled():
@@ -312,7 +314,7 @@ def cancelled():
             card[bill['bill_id']] = [{'date': bill['date'], 'amount':bill['amount'], 'mode':bill['mode']}]
             card[bill['bill_id']].append({'check_in':bill['check_in'],'check_out':bill['check_out'],'room_no':bill['room_no'],
             'price':bill['price'],'hotel_name':bill['hotel_name'],'locations':bill['locations']})
-    return render_template('bill_details.html', card = card, cancelled =True)
+    return render_template('bill_details.html', card = card, cancelled =True, back=url_for('.dashboard'))
 
 @app.route('/history')
 def history():
@@ -338,7 +340,7 @@ def history():
             card[bill['bill_id']].append({'check_in':bill['check_in'],'check_out':bill['check_out'],'room_no':bill['room_no'],
             'price':bill['price'],'hotel_name':bill['hotel_name'],'locations':bill['locations']})
 
-    return render_template('bill_details.html', card = card, history =True)
+    return render_template('bill_details.html', card = card, history =True, back=url_for('.dashboard'))
 
 @app.route('/review/<hotel_id>', methods=['GET','POST'])
 def review(hotel_id):
@@ -363,8 +365,10 @@ def review(hotel_id):
     cur = con.cursor()
     cur.execute('SELECT star, details FROM REVIEW WHERE hotel_id=%s ORDER BY review_id DESC;'%(hotel_id))
     reviews = cur.fetchall()
+    cur.execute('SELECT locations FROM HOTEL WHERE hotel_id=%s'%(hotel_id))
+    location = cur.fetchone()[0]
     con.close()
-    return render_template('review.html', reviews=reviews, reviewform=reviewform, hotel_id=hotel_id)
+    return render_template('review.html', reviews=reviews, reviewform=reviewform, hotel_id=hotel_id, back=url_for('hotel', location=location))
 
 @app.route('/terms')
 def terms():
@@ -387,4 +391,4 @@ def profile():
                 print('')
             else:
                 flash("old password didnt match")
-    return render_template('profile.html', profile = profile, profileform=profileform)
+    return render_template('profile.html', profile = profile, profileform=profileform, back=url_for('.dashboard'))

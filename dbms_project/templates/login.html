@@ -87,7 +87,7 @@
   }
 
   /* The Close Button (x) */
-  .close {
+  .close1 {
     position: absolute;
     right: 25px;
     top: 0;
@@ -96,8 +96,8 @@
     font-weight: bold;
   }
 
-  .close:hover,
-  .close:focus {
+  .close1:hover,
+  .close1:focus {
     color: red;
     cursor: pointer;
   }
@@ -152,7 +152,7 @@
 </head>
 
 <header class="d-flex justify-content-between bg-danger text-black mb-3">
-<h2 class="align-middle">Hotel Room Booking</h2>
+<h2 class="align-middle text-light display-4">Hotel Room Booking</h2>
 <div class="d-flex justify-content-end">
 <div>
 <button onclick="document.getElementById('id01').style.display='block'" >Login</button>
@@ -171,14 +171,13 @@
     {% if messages %}
       {% for category, message in messages %}
           {% if category == 'message' %}
-            <div class="alert alert-warning " role="alert">
+            <div class="alert alert-warning alert-dismissible" role="alert">
           {% else %}
-            <div class="alert alert-{{ category }}" role="alert">
+            <div class="alert alert-{{ category }} alert-dismissible" role="alert">
           {% endif %}
+          <span class="btn close" data-dismiss="alert">&times;</span>
             {{ message }}
-            <button type="button" class="close alert-dismissible"  data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button></div>
+          </div>
       {% endfor %}
     {% endif %}
 {% endwith %}
@@ -189,7 +188,7 @@
   <form class="modal-content animate" action="{{ url_for('.home') }}" method="post">
     {{signinform.hidden_tag()}}
     <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <span onclick="document.getElementById('id01').style.display='none'" class="close1" title="Close Modal">&times;</span>
       <img src="{{ url_for('static',filename='image.jpg') }}" alt="Avatar" class="avatar">
     </div>
 
@@ -212,16 +211,16 @@
           {% endfor%}
       <!--<input type="password" placeholder="Enter Password" name="psw" required>-->
       <button type="submit" id="signin" name="signin">Login</button>
-      <label>
+      <!--<label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
-      </label>
+      </label>-->
     </div>
 
     <div class="container" style="background-color:#f1f1f1">
       <div style="display: flex; flex-direction: row;justify-content: space-between;">
       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
       <span class="psw">New User?<a href=# onclick="document.getElementById('id01').style.display='none';document.getElementById('id02').style.display='block';" style="width:auto; ">Sign Up</a> here</span>
-      <span class="psw">Forgot <a href="forgot_password.html">password?</a></span>
+      <!--<span class="psw">Forgot <a href="forgot_password.html">password?</a></span>-->
       </div>
     </div>
   </form>
@@ -234,7 +233,7 @@
   <form class="modal-content animate" action="{{ url_for('.home') }}" method="post">
     {{registerform.hidden_tag()}}
     <div class="imgcontainer">
-      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <span onclick="document.getElementById('id02').style.display='none'" class="close1" title="Close Modal">&times;</span>
       <img src="{{ url_for('static',filename='image.jpg') }}" alt="Avatar" class="avatar">
     </div>
 
@@ -267,7 +266,7 @@
       {{ registerform.repassword(placeholder="Enter Password Again") }}
       <!--<input type="password" placeholder="Enter Password Again" name="cpsw" required>-->
       <label>
-        <input type="checkbox" checked="checked" name="agree">By creating an account you agree to our <a href="{{url_for('.terms')}}" target="_blank" style="color:dodgerblue">Terms & Privacy</a>.
+        <input type="checkbox" checked="checked" name="agree" required>By creating an account you agree to our <a href="{{url_for('.terms')}}" target="_blank" style="color:dodgerblue">Terms & Privacy</a>.
       </label>
       <button type="submit" id="register" name="register">Sign Up</button>
 

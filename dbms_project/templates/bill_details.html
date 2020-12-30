@@ -5,7 +5,15 @@ body {font-family: Arial, Helvetica, sans-serif;}
 {% endblock %}
 
 {% block main %}
-
+<h1>
+  {% if upcoming %}
+  UPCOMING
+  {% elif cancelled %}
+  CANCELLED BOOKINGS
+  {% else %}
+  BOOKING HISTORY
+  {% endif %}
+</h1>
 <div class="d-flex flex-wrap align-content-around m-5">
 
 {% for bill in card %}

@@ -17,7 +17,10 @@
 </head>
 <body>
   <header class="d-flex justify-content-between bg-danger text-black mb-3">
-    <h2 class="align-middle">Hotel Room Booking</h2>
+    {% if back %}
+    <a href="{{back}}" class="btn btn-sm btn-dark">Back</a>
+    {% endif %}
+    <h2 class="align-middle text-light display-4">Hotel Room Booking</h2>
     <a href="{{ url_for('.logout') }}" class="btn btn-dark btn-lg">
       <span class="glyphicon glyphicon-log-out"></span> Log out
     </a>
@@ -27,10 +30,11 @@
       {% if messages %}
         {% for category, message in messages %}
             {% if category == 'message' %}
-              <div class="alert alert-warning" role="alert">
+              <div class="alert alert-warning alert-dismissible" role="alert">
             {% else %}
-              <div class="alert alert-{{ category }}" role="alert">
+              <div class="alert alert-{{ category }} alert-dismissible" role="alert">
             {% endif %}
+            <span class="btn close" data-dismiss="alert">&times;</span>
               {{ message }}
             </div>
         {% endfor %}
