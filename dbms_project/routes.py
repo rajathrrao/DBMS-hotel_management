@@ -1,15 +1,23 @@
-from flask import render_template, request, redirect, url_for, flash, send_file, session
+from flask import render_template, request, redirect, url_for, flash, session
 import sqlite3
-from werkzeug.utils import secure_filename
-import os, shutil
 from datetime import date, timedelta, datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_mail import Mail, Message
 
 from app import app
 from forms import *
 
 DATABASE = 'hotel_room_allotment.db'
 interval_time = ' 10:00:00'
+
+mail= Mail(app)
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'sjcevfm@gmail.com'
+app.config['MAIL_PASSWORD'] = 'sjcelccvfm'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 def check_login():
     if session.get('logged_in') != True:
@@ -63,7 +71,7 @@ def home():
         elif 'register' in request.form:
             if registerform.validate_on_submit():
                 if registerform.password.data==registerform.repassword.data:
-                    try:
+                    if True:
                         hashed_password = generate_password_hash(registerform.password.data, method='sha256')
                         with sqlite3.connect(DATABASE) as con:
                             cur = con.cursor()
@@ -71,11 +79,17 @@ def home():
                             (registerform.userid.data, hashed_password, registerform.name.data,
                             registerform.phone.data, registerform.email.data, registerform.aadhar.data,) )
                             con.commit()
+                        msg = Message('successfully signed up', sender = 'sjcevfm@gmail.com', recipients = [registerform.email.data])
+                        msg.body = '''Hello %s,
+                        Thank you for signing up.
+                        You can login here - https://127.0.0.1:5000%s
+                        THANK YOU.'''%(registerform.name.data, url_for('.home'))
+                        mail.send(msg)
                         flash("User created successfully","success")
                         return redirect(url_for('.home'))
-                    except:
-                        con.rollback()
-                        flash("Username already exists.","warning")
+                    #except:
+                    #    con.rollback()
+                    #    flash("SignUp unsuccessful","warning")
                 else:
                     flash("Re-entered password not matched the password","warning")
 
@@ -220,6 +234,12 @@ def ConfirmBooking():
                 reservation['check_in'], reservation['check_out'], "RESERVED"))
             cur.execute('DELETE FROM TEMP_CART WHERE c_id="%s";'%(session['c_id']))
             con.commit()
+            msg = Message('Hotel reservation confirmed', sender = 'sjcevfm@gmail.com', recipients = [session['email']])
+            msg.body = '''Hello %s,
+            Thank you for booking rooms on our website. Your booking has been confirmed.
+            You can check your bill here - https://127.0.0.1:5000%s
+            THANK YOU.'''%(session['name'], url_for('.upcoming'))
+            mail.send(msg)
             flash('successfully created bill','success')
     except:
         con.rollback()
@@ -237,6 +257,12 @@ def upcoming():
                     cur = con.cursor()
                     cur.execute('UPDATE RESERVATION SET status="CANCELLED" WHERE bill_id=%s;'%(request.form['bill_id']) )
                     con.commit()
+                msg = Message('Hotel bill cancelled', sender = 'sjcevfm@gmail.com', recipients = [session['email']])
+                msg.body = '''Hello %s,
+                Your booking has been cancelled. However you need to pay Rs. 500.
+                You can check your bill here - https://127.0.0.1:5000%s
+                THANK YOU.'''%(session['name'], url_for('.cancelled'))
+                mail.send(msg)
                 flash("Selected bill cancelled","success")
                 return redirect(url_for('.cancelled'))
             except:
